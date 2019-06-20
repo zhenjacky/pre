@@ -1,3 +1,24 @@
+
+
+<div align="center">
+<div style="height:256px; width:256px; text-align: center;">
+<img src="https://images.gitee.com/uploads/images/2019/0619/152102_90c67e77_1758995.png" height="256" width="256">
+</div>
+
+ <a href="https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg">
+            <img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg" alt="Apache License">
+    </a>
+ <a href="http://spring.io/projects/spring-boot">
+            <img src="https://img.shields.io/badge/spring--boot-2.1.5.RELEASE-green.svg" alt="spring-boot">
+       </a>
+    <a href="http://mp.baomidou.com">
+            <img src="https://img.shields.io/badge/mybatis--plus-3.1.1-blue.svg" alt="mybatis-plus">
+    </a>  
+    <a href="https://shiro.apache.org/">
+            <img src="https://img.shields.io/badge/security-5.1.5-blue.svg" alt="shiro">
+    </a>
+</div>
+
 #### 介绍
 Pre基于Spring Boot 、Spring Security的RBAC权限管理系统, 做更简洁的后台管理系统。
 
