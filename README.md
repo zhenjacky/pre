@@ -2,7 +2,7 @@
 
 <div align="center">
 <div style="height:256px; width:256px; text-align: center;">
-<img src="https://images.gitee.com/uploads/images/2019/0619/152102_90c67e77_1758995.png" height="256" width="256">
+<img src="https://gitee.com/li_haodong/picture_management/raw/master/pic/WechatIMG5.png" height="256" width="256">
 </div>
 
  <a href="https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg">
