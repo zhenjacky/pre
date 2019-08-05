@@ -1,6 +1,6 @@
 package com.xd.pre.exception;
 
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.AccessDeniedException;
@@ -28,50 +28,50 @@ public class BExceptionHandler {
      * 处理自定义异常
      */
     @ExceptionHandler(BaseException.class)
-    public R handleRRException(BaseException e) {
-        return R.error(e.getCode(), e.getMsg());
+    public Response handleRRException(BaseException e) {
+        return Response.error(e.getCode(), e.getMsg());
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public R handlerNoFoundException(Exception e) {
+    public Response handlerNoFoundException(Exception e) {
         log.error(e.getMessage(), e);
-        return R.error(404, "路径不存在，请检查路径是否正确");
+        return Response.error(404, "路径不存在，请检查路径是否正确");
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    public R handleDuplicateKeyException(DuplicateKeyException e) {
+    public Response handleDuplicateKeyException(DuplicateKeyException e) {
         log.error(e.getMessage(), e);
-        return R.error(300, "数据库中已存在该记录");
+        return Response.error(300, "数据库中已存在该记录");
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public R handleAuthorizationException(AccessDeniedException e) {
+    public Response handleAuthorizationException(AccessDeniedException e) {
         log.error(e.getMessage(), e);
-        return R.error(403, "没有权限，请联系管理员授权");
+        return Response.error(403, "没有权限，请联系管理员授权");
     }
 
     @ExceptionHandler(AccountExpiredException.class)
-    public R handleAccountExpiredException(AccountExpiredException e) {
+    public Response handleAccountExpiredException(AccountExpiredException e) {
         log.error(e.getMessage(), e);
-        return R.error(e.getMessage());
+        return Response.error(e.getMessage());
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public R handleUsernameNotFoundException(UsernameNotFoundException e) {
+    public Response handleUsernameNotFoundException(UsernameNotFoundException e) {
         log.error(e.getMessage(), e);
-        return R.error(e.getMessage());
+        return Response.error(e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
-    public R handleException(Exception e) {
+    public Response handleException(Exception e) {
         log.error(e.getMessage(), e);
-        return R.error();
+        return Response.error();
     }
 
     @ExceptionHandler(SQLException.class)
-    public R handleSQLException(SQLException e) {
+    public Response handleSQLException(SQLException e) {
         log.error(e.getMessage(), e);
-        return R.error();
+        return Response.error();
     }
 
 }

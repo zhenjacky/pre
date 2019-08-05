@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 
 /**
- * @Classname R
+ * @Classname Response
  * @Description 响应信息主体
  * @Author 李号东 lihaodongmail@163.com
  * @Date 2019-03-27 21:54
@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Getter
 @ToString
 @Accessors(chain = true)
-public class R implements Serializable {
+public class Response implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,31 +29,31 @@ public class R implements Serializable {
     private String msg;
     private Object data;
 
-    public static R ok() {
-        R r = new R();
-        r.setMsg("操作成功");
-        return r;
+    public static Response ok() {
+        Response response = new Response();
+        response.setMsg("操作成功");
+        return response;
     }
 
-    public static R ok(Object data) {
-        R r = new R();
-        r.setMsg("操作成功");
-        r.setData(data);
-        return r;
+    public static Response ok(Object data) {
+        Response response = new Response();
+        response.setMsg("操作成功");
+        response.setData(data);
+        return response;
     }
 
-    public static R error() {
+    public static Response error() {
         return error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "未知异常，请联系管理员");
     }
 
-    public static R error(String msg) {
+    public static Response error(String msg) {
         return error(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg);
     }
 
-    public static R error(int code, String msg) {
-        R r = new R();
-        r.setCode(code);
-        r.setMsg(msg);
-        return r;
+    public static Response error(int code, String msg) {
+        Response response = new Response();
+        response.setCode(code);
+        response.setMsg(msg);
+        return response;
     }
 }

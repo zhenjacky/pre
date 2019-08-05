@@ -8,7 +8,7 @@ import com.xd.pre.security.PreUser;
 import com.xd.pre.security.util.SecurityUtil;
 import com.xd.pre.service.ISysMenuService;
 import com.xd.pre.utils.PreUtil;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import com.xd.pre.vo.MenuVo;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +42,8 @@ public class SysMenuController {
     @PreAuthorize("hasAuthority('sys:menu:add')")
     @SysLog(descrption = "添加菜单")
     @PostMapping
-    public R save(@RequestBody SysMenu menu) {
-        return R.ok(menuService.save(menu));
+    public Response save(@RequestBody SysMenu menu) {
+        return Response.ok(menuService.save(menu));
     }
 
     /**
@@ -52,9 +52,9 @@ public class SysMenuController {
      * @return
      */
     @GetMapping
-    public R getMenuTree() {
+    public Response getMenuTree() {
         PreUser securityUser = SecurityUtil.getUser();
-        return R.ok(menuService.selectMenuTree(securityUser.getUserId()));
+        return Response.ok(menuService.selectMenuTree(securityUser.getUserId()));
     }
 
 
@@ -64,8 +64,8 @@ public class SysMenuController {
      * @return
      */
     @GetMapping("/getMenus")
-    public R getMenus() {
-        return R.ok(menuService.selectMenuTree(0));
+    public Response getMenus() {
+        return Response.ok(menuService.selectMenuTree(0));
     }
 
     /**
@@ -77,8 +77,8 @@ public class SysMenuController {
     @PreAuthorize("hasAuthority('sys:menu:update')")
     @SysLog(descrption = "修改菜单")
     @PutMapping
-    public R updateMenu(@RequestBody MenuDTO menuDto) {
-        return R.ok(menuService.updateMenuById(menuDto));
+    public Response updateMenu(@RequestBody MenuDTO menuDto) {
+        return Response.ok(menuService.updateMenuById(menuDto));
     }
 
     /**
@@ -90,7 +90,7 @@ public class SysMenuController {
     @PreAuthorize("hasAuthority('sys:menu:delete')")
     @SysLog(descrption = "删除菜单")
     @DeleteMapping("/{id}")
-    public R deleteMenu(@PathVariable("id") Integer id) {
+    public Response deleteMenu(@PathVariable("id") Integer id) {
         return menuService.removeMenuById(id);
     }
 
@@ -100,10 +100,10 @@ public class SysMenuController {
      * @return
      */
     @GetMapping("/getRouters")
-    public R getRouters() {
+    public Response getRouters() {
         PreUser securityUser = SecurityUtil.getUser();
         List<MenuVo> menuVos = PreUtil.buildMenus(menuService.selectMenuTree(securityUser.getUserId()));
-        return R.ok(PreUtil.buildMenus(menuService.selectMenuTree(securityUser.getUserId())));
+        return Response.ok(PreUtil.buildMenus(menuService.selectMenuTree(securityUser.getUserId())));
     }
 
 }

@@ -1,10 +1,9 @@
 package com.xd.pre.controller;
 
 import com.xd.pre.constant.PreConstant;
-import com.xd.pre.limit.RateLimit;
 import com.xd.pre.service.ISysUserService;
 import com.xd.pre.utils.CaptchaUtil;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -73,8 +72,8 @@ public class IndexController {
      * @return
      */
     @RequestMapping(value = "/login")
-    public R login(String username, String password, String captcha, HttpServletRequest request) {
-        return R.ok(userService.login(username, password, captcha, request));
+    public Response login(String username, String password, String captcha, HttpServletRequest request) {
+        return Response.ok(userService.login(username, password, captcha, request));
     }
 
     /**
@@ -83,14 +82,14 @@ public class IndexController {
      * @Date 08:12 2019-06-22
      **/
     @RequestMapping("/info")
-    public R info() {
+    public Response info() {
         Map<String, Object> map = new HashMap<>();
         List<String> list = new ArrayList<>();
         list.add("admin");
         map.put("roles", list);
         map.put("avatar", "https://gitee.com/li_haodong/picture_management/raw/master/pic/pre_red.png");
         map.put("name", "Super Admin");
-        return R.ok(map);
+        return Response.ok(map);
     }
 
     /**

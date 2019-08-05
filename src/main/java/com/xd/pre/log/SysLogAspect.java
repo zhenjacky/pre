@@ -6,7 +6,7 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.xd.pre.security.PreUser;
 import com.xd.pre.security.util.SecurityUtil;
 import com.xd.pre.utils.LogUtil;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -91,13 +91,13 @@ public class SysLogAspect {
     @AfterReturning(returning = "ret", pointcut = "sysLogAspect()")
     public void doAfterReturning(Object ret) {
         // 处理完请求，返回内容
-        R r = Convert.convert(R.class, ret);
-        if (r.getCode() == 200){
+        Response response = Convert.convert(Response.class, ret);
+        if (response.getCode() == 200){
             // 正常返回
             sysLog.setType(1);
         } else {
             sysLog.setType(2);
-            sysLog.setExDetail(r.getMsg());
+            sysLog.setExDetail(response.getMsg());
         }
         // 发布事件
         applicationContext.publishEvent(new SysLogEvent(sysLog));

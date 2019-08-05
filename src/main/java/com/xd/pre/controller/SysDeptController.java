@@ -5,7 +5,7 @@ import com.xd.pre.domain.SysDept;
 import com.xd.pre.dto.DeptDTO;
 import com.xd.pre.log.SysLog;
 import com.xd.pre.service.ISysDeptService;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,8 +36,8 @@ public class SysDeptController {
     @SysLog(descrption = "保存部门信息")
     @PostMapping
     @PreAuthorize("hasAuthority('sys:dept:add')")
-    public R save(@RequestBody SysDept sysDept) {
-        return R.ok(deptService.save(sysDept));
+    public Response save(@RequestBody SysDept sysDept) {
+        return Response.ok(deptService.save(sysDept));
     }
 
     /**
@@ -47,8 +47,8 @@ public class SysDeptController {
      */
     @GetMapping
     @PreAuthorize("hasAuthority('sys:dept:view')")
-    public R getDeptList() {
-        return R.ok(deptService.selectDeptList());
+    public Response getDeptList() {
+        return Response.ok(deptService.selectDeptList());
     }
 
     /**
@@ -56,8 +56,8 @@ public class SysDeptController {
      * @return
      */
     @GetMapping("/tree")
-    public R getDeptTree() {
-        return R.ok(deptService.getDeptTree());
+    public Response getDeptTree() {
+        return Response.ok(deptService.getDeptTree());
     }
 
 
@@ -69,8 +69,8 @@ public class SysDeptController {
     @SysLog(descrption = "更新部门信息")
     @PutMapping
     @PreAuthorize("hasAuthority('sys:dept:update')")
-    public R update(@RequestBody DeptDTO deptDto) {
-        return R.ok(deptService.updateDeptById(deptDto));
+    public Response update(@RequestBody DeptDTO deptDto) {
+        return Response.ok(deptService.updateDeptById(deptDto));
     }
 
     /**
@@ -81,8 +81,8 @@ public class SysDeptController {
     @SysLog(descrption = "根据id删除部门信息")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('sys:dept:delete')")
-    public R delete(@PathVariable("id") Integer id) {
-        return R.ok(deptService.removeById(id));
+    public Response delete(@PathVariable("id") Integer id) {
+        return Response.ok(deptService.removeById(id));
     }
 
 

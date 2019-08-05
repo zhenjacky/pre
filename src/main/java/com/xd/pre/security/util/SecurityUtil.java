@@ -3,15 +3,12 @@ package com.xd.pre.security.util;
 import com.alibaba.fastjson.JSON;
 import com.xd.pre.exception.BaseException;
 import com.xd.pre.security.PreUser;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import lombok.experimental.UtilityClass;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,7 +40,7 @@ public class SecurityUtil {
         return null;
     }
 
-    public void writeJavaScript(R r, HttpServletResponse response) throws IOException {
+    public void writeJavaScript(Response r, HttpServletResponse response) throws IOException {
         response.setStatus(200);
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");

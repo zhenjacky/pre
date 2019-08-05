@@ -13,7 +13,7 @@ import com.xd.pre.security.util.SecurityUtil;
 import com.xd.pre.service.ISysUserService;
 import com.xd.pre.utils.EmailUtil;
 import com.xd.pre.utils.PreUtil;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,8 +49,8 @@ public class SysUserController {
     @SysLog(descrption = "保存用户包括角色和部门")
     @PostMapping
     @PreAuthorize("hasAuthority('sys:user:add')")
-    public R insert(@RequestBody UserDTO userDto) {
-        return R.ok(userService.insertUser(userDto));
+    public Response insert(@RequestBody UserDTO userDto) {
+        return Response.ok(userService.insertUser(userDto));
     }
 
 
@@ -64,8 +64,8 @@ public class SysUserController {
     @SysLog(descrption = "查询用户集合")
     @GetMapping
     @PreAuthorize("hasAuthority('sys:user:view')")
-    public R getList(Page page, UserDTO userDTO) {
-        return R.ok(userService.getUsersWithRolePage(page, userDTO));
+    public Response getList(Page page, UserDTO userDTO) {
+        return Response.ok(userService.getUsersWithRolePage(page, userDTO));
     }
 
     /**
@@ -77,8 +77,8 @@ public class SysUserController {
     @SysLog(descrption = "更新用户包括角色和部门")
     @PutMapping
     @PreAuthorize("hasAuthority('sys:user:update')")
-    public R update(@RequestBody UserDTO userDto) {
-        return R.ok(userService.updateUser(userDto));
+    public Response update(@RequestBody UserDTO userDto) {
+        return Response.ok(userService.updateUser(userDto));
     }
 
     /**
@@ -90,8 +90,8 @@ public class SysUserController {
     @SysLog(descrption = "根据用户id删除用户包括角色和部门")
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasAuthority('sys:user:delete')")
-    public R delete(@PathVariable("userId") Integer userId) {
-        return R.ok(userService.removeUser(userId));
+    public Response delete(@PathVariable("userId") Integer userId) {
+        return Response.ok(userService.removeUser(userId));
     }
 
 
@@ -104,8 +104,8 @@ public class SysUserController {
     @SysLog(descrption = "重置密码")
     @PutMapping("/{userId}")
     @PreAuthorize("hasAuthority('sys:user:rest')")
-    public R restPass(@PathVariable("userId") Integer userId) {
-        return R.ok(userService.restPass(userId));
+    public Response restPass(@PathVariable("userId") Integer userId) {
+        return Response.ok(userService.restPass(userId));
     }
 
 
@@ -116,8 +116,8 @@ public class SysUserController {
      */
     @SysLog(descrption = "获取个人信息")
     @GetMapping("/info")
-    public R getUserInfo() {
-        return R.ok(userService.findByUserInfoName(SecurityUtil.getUser().getUsername()));
+    public Response getUserInfo() {
+        return Response.ok(userService.findByUserInfoName(SecurityUtil.getUser().getUsername()));
     }
 
     /**
@@ -128,7 +128,7 @@ public class SysUserController {
     @SysLog(descrption = "修改密码")
     @PutMapping("updatePass")
     @PreAuthorize("hasAuthority('sys:user:updatePass')")
-    public R updatePass(@RequestParam String oldPass, @RequestParam String newPass) {
+    public Response updatePass(@RequestParam String oldPass, @RequestParam String newPass) {
         // 校验密码流程
         SysUser sysUser = userService.findByUserName(SecurityUtil.getUser().getUsername());
         if (!PreUtil.validatePass(oldPass, sysUser.getPassword())) {
@@ -141,7 +141,7 @@ public class SysUserController {
         SysUser user = new SysUser();
         user.setUserId(sysUser.getUserId());
         user.setPassword(PreUtil.encode(newPass));
-        return R.ok(userService.updateUserInfo(user));
+        return Response.ok(userService.updateUserInfo(user));
     }
 
     /**
@@ -151,9 +151,9 @@ public class SysUserController {
      * @return
      */
     @PostMapping("/vailUserName")
-    public R vailUserName(@RequestParam String userName) {
+    public Response vailUserName(@RequestParam String userName) {
         SysUser sysUser = userService.findByUserName(userName);
-        return R.ok(ObjectUtil.isNull(sysUser));
+        return Response.ok(ObjectUtil.isNull(sysUser));
     }
 
     /**
@@ -164,9 +164,9 @@ public class SysUserController {
      * @return
      */
     @PostMapping("/sendMailCode")
-    public R sendMailCode(@RequestParam String to, HttpServletRequest request) {
+    public Response sendMailCode(@RequestParam String to, HttpServletRequest request) {
         emailUtil.sendSimpleMail(to, request);
-        return R.ok();
+        return Response.ok();
     }
 
     /**
@@ -177,7 +177,7 @@ public class SysUserController {
     @SysLog(descrption = "修改邮箱")
     @PutMapping("updateEmail")
     @PreAuthorize("hasAuthority('sys:user:updateEmail')")
-    public R updateEmail(@RequestParam String mail, @RequestParam String code, @RequestParam String pass, HttpServletRequest request) {
+    public Response updateEmail(@RequestParam String mail, @RequestParam String code, @RequestParam String pass, HttpServletRequest request) {
         // 校验验证码流程
         String ccode = (String) request.getSession().getAttribute(PreConstant.RESET_MAIL);
         if (ObjectUtil.isNull(ccode)) {
@@ -195,7 +195,7 @@ public class SysUserController {
         SysUser user = new SysUser();
         user.setUserId(sysUser.getUserId());
         user.setEmail(mail);
-        return R.ok(userService.updateUserInfo(user));
+        return Response.ok(userService.updateUserInfo(user));
     }
 
 

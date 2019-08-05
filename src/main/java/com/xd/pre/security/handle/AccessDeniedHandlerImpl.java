@@ -2,12 +2,11 @@ package com.xd.pre.security.handle;
 
 import cn.hutool.http.Status;
 import com.xd.pre.security.util.SecurityUtil;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +27,6 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler , Serializab
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException {
         log.info("请求: " + request.getRequestURI() + " 权限不足，无法访问系统资源.");
         log.error(e.getMessage());
-        SecurityUtil.writeJavaScript(R.error(Status.HTTP_FORBIDDEN,"权限不足,禁止访问"),response);
+        SecurityUtil.writeJavaScript(Response.error(Status.HTTP_FORBIDDEN,"权限不足,禁止访问"),response);
     }
 }

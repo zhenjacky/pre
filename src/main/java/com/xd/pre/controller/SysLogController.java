@@ -2,7 +2,7 @@ package com.xd.pre.controller;
 
 
 import com.xd.pre.service.ISysLogService;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,16 +34,16 @@ public class SysLogController {
      */
     @GetMapping
     @PreAuthorize("hasAuthority('sys:log:view')")
-    public R selectLog(@RequestParam("page") Integer page,@RequestParam("pageSize") Integer pageSize,@RequestParam("type") Integer type,@RequestParam String userName){
-        return R.ok(logService.selectLogList(page, pageSize,type,userName));
+    public Response selectLog(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize, @RequestParam("type") Integer type, @RequestParam String userName){
+        return Response.ok(logService.selectLogList(page, pageSize,type,userName));
     }
 
 
     @com.xd.pre.log.SysLog(descrption = "删除日志")
     @DeleteMapping("/{logId}")
     @PreAuthorize("hasAuthority('sys:log:delete')")
-    public R delete(@PathVariable("logId") Integer logId) {
-        return R.ok(logService.removeById(logId));
+    public Response delete(@PathVariable("logId") Integer logId) {
+        return Response.ok(logService.removeById(logId));
     }
 }
 

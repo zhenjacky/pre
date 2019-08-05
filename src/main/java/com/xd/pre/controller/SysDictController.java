@@ -5,7 +5,7 @@ import com.xd.pre.domain.SysDict;
 import com.xd.pre.dto.DictDTO;
 import com.xd.pre.log.SysLog;
 import com.xd.pre.service.ISysDictService;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,8 +35,8 @@ public class SysDictController {
      */
     @SysLog(descrption = "保存字典信息")
     @PostMapping
-    public R save(@RequestBody SysDict sysDict) {
-        return R.ok(dictService.save(sysDict));
+    public Response save(@RequestBody SysDict sysDict) {
+        return Response.ok(dictService.save(sysDict));
     }
 
     /**
@@ -49,8 +49,8 @@ public class SysDictController {
     @SysLog(descrption = "查询字典集合")
     @GetMapping
     @PreAuthorize("hasAuthority('sys:dipt:view')")
-    public R getList(Integer page, Integer pageSize) {
-        return R.ok(dictService.selectDictList(page, pageSize));
+    public Response getList(Integer page, Integer pageSize) {
+        return Response.ok(dictService.selectDictList(page, pageSize));
     }
 
 
@@ -60,8 +60,8 @@ public class SysDictController {
      * @Date 15:20 2019-05-26
      **/
     @GetMapping("/getDictDetailList")
-    public R selectDictDetailList(@RequestParam String name) {
-        return R.ok(dictService.selectDictDetailList(name));
+    public Response selectDictDetailList(@RequestParam String name) {
+        return Response.ok(dictService.selectDictDetailList(name));
     }
 
     /**
@@ -72,8 +72,8 @@ public class SysDictController {
      */
     @SysLog(descrption = "更新字典")
     @PutMapping
-    public R update(@RequestBody DictDTO dictDto) {
-        return R.ok(dictService.updateDict(dictDto));
+    public Response update(@RequestBody DictDTO dictDto) {
+        return Response.ok(dictService.updateDict(dictDto));
     }
 
 
@@ -84,8 +84,8 @@ public class SysDictController {
      */
     @SysLog(descrption = "根据id删除字典")
     @DeleteMapping("{id}")
-    public R delete(@PathVariable("id") int id) {
-        return R.ok(dictService.removeById(id));
+    public Response delete(@PathVariable("id") int id) {
+        return Response.ok(dictService.removeById(id));
     }
 
     /**
@@ -95,8 +95,8 @@ public class SysDictController {
      */
     @SysLog(descrption = "根据name删除字典")
     @DeleteMapping("/delete")
-    public R deleteName(@RequestParam String name) {
-        return R.ok(dictService.deleteDictByName(name));
+    public Response deleteName(@RequestParam String name) {
+        return Response.ok(dictService.deleteDictByName(name));
     }
 
 }

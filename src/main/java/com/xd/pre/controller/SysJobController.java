@@ -4,7 +4,7 @@ package com.xd.pre.controller;
 import com.xd.pre.domain.SysJob;
 import com.xd.pre.log.SysLog;
 import com.xd.pre.service.ISysJobService;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,8 +36,8 @@ public class SysJobController {
      */
     @GetMapping
     @PreAuthorize("hasAuthority('sys:job:view')")
-    public R getList(Integer page, Integer pageSize,@RequestParam(defaultValue = "") String jobName) {
-        return R.ok(jobService.selectJobList(page, pageSize, jobName));
+    public Response getList(Integer page, Integer pageSize, @RequestParam(defaultValue = "") String jobName) {
+        return Response.ok(jobService.selectJobList(page, pageSize, jobName));
     }
 
     /**
@@ -49,8 +49,8 @@ public class SysJobController {
     @SysLog(descrption = "保存岗位")
     @PostMapping
     @PreAuthorize("hasAuthority('sys:job:add')")
-    public R save(@RequestBody SysJob sysJob) {
-        return R.ok(jobService.save(sysJob));
+    public Response save(@RequestBody SysJob sysJob) {
+        return Response.ok(jobService.save(sysJob));
     }
 
     /**
@@ -61,8 +61,8 @@ public class SysJobController {
     @SysLog(descrption = "根据id删除岗位")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('sys:job:delete')")
-    public R delete(@PathVariable("id") Integer id) {
-        return R.ok(jobService.removeById(id));
+    public Response delete(@PathVariable("id") Integer id) {
+        return Response.ok(jobService.removeById(id));
     }
 
     /**
@@ -73,14 +73,14 @@ public class SysJobController {
     @SysLog(descrption = "更新岗位")
     @PutMapping
     @PreAuthorize("hasAuthority('sys:job:update')")
-    public R update(@RequestBody SysJob sysJob) {
-        return R.ok(jobService.updateById(sysJob));
+    public Response update(@RequestBody SysJob sysJob) {
+        return Response.ok(jobService.updateById(sysJob));
     }
 
 
     @GetMapping("/{id}")
-    public R selectJobListByDeptId(@PathVariable("id") Integer deptId) {
-        return R.ok(jobService.selectJobListByDeptId(deptId));
+    public Response selectJobListByDeptId(@PathVariable("id") Integer deptId) {
+        return Response.ok(jobService.selectJobListByDeptId(deptId));
     }
 
 

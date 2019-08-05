@@ -12,7 +12,7 @@ import com.xd.pre.service.ISysMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.pre.service.ISysRoleMenuService;
 import com.xd.pre.utils.PreUtil;
-import com.xd.pre.utils.R;
+import com.xd.pre.utils.Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,13 +88,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public R removeMenuById(Serializable id) {
+    public Response removeMenuById(Serializable id) {
         List<Integer> idList =
                 this.list(Wrappers.<SysMenu>query().lambda().eq(SysMenu::getParentId, id)).stream().map(SysMenu::getMenuId).collect(Collectors.toList());
         if (CollUtil.isNotEmpty(idList)) {
-            return R.error("菜单含有下级不能删除");
+            return Response.error("菜单含有下级不能删除");
         }
-        return R.ok(this.removeById(id));
+        return Response.ok(this.removeById(id));
     }
 
     /**
