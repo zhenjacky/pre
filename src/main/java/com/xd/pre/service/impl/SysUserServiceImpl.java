@@ -58,9 +58,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Resource
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    RedisTemplate redisTemplate;
+//
+//    @Autowired
+//    RedisTemplate redisTemplate;
 
     @Override
     public IPage<SysUser> getUsersWithRolePage(Page page, UserDTO userDTO) {
@@ -154,13 +154,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public String login(String username, String password, String captcha, HttpServletRequest request) {
         // 验证验证码
         // 从redis中获取之前保存的验证码跟前台传来的验证码进行匹配
-        Object kaptcha = redisTemplate.opsForValue().get(PreConstant.PRE_IMAGE_SESSION_KEY);
-        if (kaptcha == null) {
-            throw new BaseException("验证码已失效");
-        }
-        if (!captcha.toLowerCase().equals(kaptcha)) {
-            throw new BaseException("验证码错误");
-        }
+//        Object kaptcha = redisTemplate.opsForValue().get(PreConstant.PRE_IMAGE_SESSION_KEY);
+//        if (kaptcha == null) {
+//            throw new BaseException("验证码已失效");
+//        }
+//        if (!captcha.toLowerCase().equals(kaptcha)) {
+//            throw new BaseException("验证码错误");
+//        }
         //用户验证
         Authentication authentication = null;
         try {

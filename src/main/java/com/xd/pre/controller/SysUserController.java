@@ -179,13 +179,13 @@ public class SysUserController {
     @PreAuthorize("hasAuthority('sys:user:updateEmail')")
     public Response updateEmail(@RequestParam String mail, @RequestParam String code, @RequestParam String pass, HttpServletRequest request) {
         // 校验验证码流程
-        String ccode = (String) request.getSession().getAttribute(PreConstant.RESET_MAIL);
-        if (ObjectUtil.isNull(ccode)) {
-            throw new BaseException("验证码已过期");
-        }
-        if (!StrUtil.equals(code.toLowerCase(), ccode)) {
-            throw new BaseException("验证码错误");
-        }
+//        String ccode = (String) request.getSession().getAttribute(PreConstant.RESET_MAIL);
+//        if (ObjectUtil.isNull(ccode)) {
+//            throw new BaseException("验证码已过期");
+//        }
+//        if (!StrUtil.equals(code.toLowerCase(), ccode)) {
+//            throw new BaseException("验证码错误");
+//        }
         // 校验密码流程
         SysUser sysUser = userService.findByUserName(SecurityUtil.getUser().getUsername());
         if (!PreUtil.validatePass(pass, sysUser.getPassword())) {

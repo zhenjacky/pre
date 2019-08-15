@@ -33,41 +33,41 @@ import java.util.Objects;
 public class LimitAspect {
 
 
-    @Autowired
-    private RedisTemplate<String, Serializable> redisTemplate;
+//    @Autowired
+//    private RedisTemplate<String, Serializable> redisTemplate;
 
     @Autowired
     private DefaultRedisScript<Number> redisluaScript;
 
-    //执行redis的具体方法，限制method,保证没有其他的东西进来
-    @Around("execution(* com.xd.pre.controller ..*(..) )")
-    public Object interceptor(ProceedingJoinPoint joinPoint) throws Throwable {
-
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        Class<?> targetClass = method.getDeclaringClass();
-
-        RateLimit rateLimit = method.getAnnotation(RateLimit.class);
-
-        if (rateLimit != null) {
-            HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-            String ipAddress = ServletUtil.getClientIP(request);
-
-            String string = ipAddress + "-" + targetClass.getName() + "- " + method.getName() + "-" + rateLimit.key();
-            List<String> keys = Collections.singletonList(string);
-            Number number = redisTemplate.execute(redisluaScript, keys, rateLimit.count(), rateLimit.time());
-
-            if (number != null && number.intValue() != 0 && number.intValue() <= rateLimit.count()) {
-                log.info("限流时间段内访问第：{} 次", number.toString());
-                return joinPoint.proceed();
-            }
-
-        } else {
-            return joinPoint.proceed();
-        }
-        log.error("已经到设置限流次数");
-        throw new RuntimeException("已经到设置限流次数");
-    }
+//    //执行redis的具体方法，限制method,保证没有其他的东西进来
+//    @Around("execution(* com.xd.pre.controller ..*(..) )")
+//    public Object interceptor(ProceedingJoinPoint joinPoint) throws Throwable {
+//
+//        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+//        Method method = signature.getMethod();
+//        Class<?> targetClass = method.getDeclaringClass();
+//
+//        RateLimit rateLimit = method.getAnnotation(RateLimit.class);
+//
+//        if (rateLimit != null) {
+//            HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+//            String ipAddress = ServletUtil.getClientIP(request);
+//
+//            String string = ipAddress + "-" + targetClass.getName() + "- " + method.getName() + "-" + rateLimit.key();
+//            List<String> keys = Collections.singletonList(string);
+//            Number number = redisTemplate.execute(redisluaScript, keys, rateLimit.count(), rateLimit.time());
+//
+//            if (number != null && number.intValue() != 0 && number.intValue() <= rateLimit.count()) {
+//                log.info("限流时间段内访问第：{} 次", number.toString());
+//                return joinPoint.proceed();
+//            }
+//
+//        } else {
+//            return joinPoint.proceed();
+//        }
+//        log.error("已经到设置限流次数");
+//        throw new RuntimeException("已经到设置限流次数");
+//    }
 
 }
 
